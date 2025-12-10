@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAM</title>
+</head>
+<body>
+
+<style>
+    body {
+        background-color: black;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    #videoContainer {
+        position: relative;
+        display: none;
+        opacity: 0;
+        transition: opacity 1s ease;
+        margin-top: 5px;
+    }
+
+    #muteBtn {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border: none;
+        border-radius: 50%;
+        padding: 7px;
+        cursor: pointer;
+    }
+
+    #muteBtn img {
+        width: 20px;
+    }
+
+    #startImg {
+        cursor: pointer;
+        transition: opacity 0.8s ease, transform 0.4s ease;
+        margin-top: 15px;
+    }
+
+    .hiddenSection {
+        opacity: 0;
+        transition: opacity 1s ease;
+        display: none;
+    }
+
+    .social {
+        transition: transform 0.2s ease;
+        cursor: pointer;
+    }
+
+    .social:hover {
+        transform: scale(1.15);
+    }
+
+    /* ⭐ อัลบั้มแบบ 2 คอลัมน์ */
+    #albumContainer {
+        width: 100%;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+
+        padding: 70px 15px 0 15px;
+    }
+
+    .albumPic {
+        width: 100%;
+        border-radius: 12px;
+        opacity: 0;
+        transition: opacity 1s ease;
+        display: block;
+    }
+
+    /* ⭐⭐ ปุ่ม Album น่ารักๆ */
+    .cuteBtn {
+        padding: 12px 28px;
+        background: linear-gradient(135deg, #ffb6d9, #ff94c2);
+        border: none;
+        border-radius: 30px;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        box-shadow: 0 6px 15px rgba(255, 140, 180, 0.5);
+        transition: 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .cuteBtn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 20px rgba(255, 140, 180, 0.6);
+    }
+
+    .cuteBtn:active {
+        transform: translateY(0);
+        box-shadow: 0 6px 12px rgba(255, 140, 180, 0.4);
+    }
+
+    /* ปุ่ม Back */
+    #backBtn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        background-color: rgba(255,255,255,0.18);
+        backdrop-filter: blur(6px);
+        cursor: pointer;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    #backBtn::before {
+        content: "";
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 7px;
+        transform: rotate(135deg);
+    }
+    
+</style>
+
+<h1 id="titleText" style="
+    color: white;
+    font-family: 'Lobster', cursive;
+    font-size: 3em;
+    margin-top: 12%;
+">
+    BAM 🐹
+</h1>
+
+<img id="startImg" src="https://raw.githubusercontent.com/GodjiKung/NONGBAM/main/pic/Bam.png?raw=true" width="120">
+
+<div id="videoContainer">
+    <video id="videoPlayer" width="200" loop>
+        <source src="https://raw.githubusercontent.com/GodjiKung/NONGBAM/main/video/a8fb3540-ff25-43b0-a9c2-078df9704913.mp4" type="video/mp4">
+    </video>
+
+    <button id="muteBtn">
+        <img id="icon" src="https://cdn-icons-png.flaticon.com/512/727/727269.png">
+    </button>
+</div>
+
+<div id="socialIcons" class="hiddenSection" style="margin-top: 20px; display: flex; gap: 15px;">
+    <a href="https://www.instagram.com/bxamm_.b/" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="30" class="social">
+    </a>
+
+    <a href="https://www.facebook.com/share/16xUZxAQBx/?mibextid=wwXIfr" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="30" class="social">
+    </a>
+
+    <a href="https://line.me/ti/p/5EEyDW2uA2" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/124/124027.png" width="30" class="social">
+    </a>
+</div>
+
+<br>
+
+<!-- ⭐ ปุ่ม Album น่ารักๆ -->
+<button id="albumBtn" class="cuteBtn hiddenSection">💗 Album 💗</button>
+
+<!-- ⭐ รูปอัลบั้ม -->
+<div id="albumContainer">
+    <img class="albumPic" src="https://github.com/GodjiKung/NONGBAM/blob/main/pic/A1.1.png?raw=true">
+    <img class="albumPic" src="https://github.com/GodjiKung/NONGBAM/blob/main/pic/A1.png?raw=true">
+    <img class="albumPic" src="https://github.com/GodjiKung/NONGBAM/blob/main/pic/B1.2.png?raw=true">
+    <img class="albumPic" src="https://github.com/GodjiKung/NONGBAM/blob/main/pic/B1.png?raw=true">
+</div>
+
+<button id="backBtn"></button>
+
+<script>
+const startImg = document.getElementById("startImg");
+const video = document.getElementById("videoPlayer");
+const container = document.getElementById("videoContainer");
+const icon = document.getElementById("icon");
+const socialIcons = document.getElementById("socialIcons");
+const albumBtn = document.getElementById("albumBtn");
+const albumPics = document.querySelectorAll(".albumPic");
+const albumContainer = document.getElementById("albumContainer");
+const titleText = document.getElementById("titleText");
+const backBtn = document.getElementById("backBtn");
+
+video.muted = true;
+
+// เริ่มเล่นวิดีโอ
+startImg.addEventListener("click", () => {
+    startImg.style.opacity = 0;
+
+    setTimeout(() => {
+        startImg.style.display = "none";
+
+        container.style.display = "inline-block";
+        setTimeout(() => container.style.opacity = 1, 50);
+
+        socialIcons.style.display = "flex";
+        setTimeout(() => socialIcons.style.opacity = 1, 100);
+
+        albumBtn.style.display = "block";
+        setTimeout(() => albumBtn.style.opacity = 1, 150);
+
+        video.play();
+        video.muted = false;
+    }, 800);
+});
+
+// ปุ่ม mute
+document.getElementById("muteBtn").addEventListener("click", () => {
+    video.muted = !video.muted;
+    icon.src = video.muted
+        ? "https://cdn-icons-png.flaticon.com/512/727/727240.png"
+        : "https://cdn-icons-png.flaticon.com/512/727/727269.png";
+});
+
+// เปิดอัลบั้ม
+albumBtn.addEventListener("click", () => {
+    video.pause();
+    video.muted = true;
+
+    titleText.style.display = "none";
+    startImg.style.display = "none";
+    container.style.display = "none";
+    socialIcons.style.display = "none";
+    albumBtn.style.display = "none";
+
+    albumContainer.style.display = "grid";
+    setTimeout(() => albumContainer.style.opacity = 1, 50);
+
+    albumPics.forEach(pic => {
+        setTimeout(() => pic.style.opacity = 1, 150);
+    });
+
+    backBtn.style.display = "flex";
+    setTimeout(() => backBtn.style.opacity = 1, 50);
+});
+
+// กลับหน้าแรก
+backBtn.addEventListener("click", () => {
+    backBtn.style.opacity = 0;
+    albumContainer.style.opacity = 0;
+
+    albumPics.forEach(pic => pic.style.opacity = 0);
+
+    setTimeout(() => {
+        albumContainer.style.display = "none";
+        backBtn.style.display = "none";
+
+        titleText.style.display = "block";
+        container.style.display = "inline-block";
+        socialIcons.style.display = "flex";
+        albumBtn.style.display = "block";
+
+        video.play();
+        video.muted = false;
+    }, 400);
+});
+</script>
+
+</body>
+</html>
